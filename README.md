@@ -4,6 +4,14 @@ The Yarn Knots website: home page, free playable demo (levels 1–10 + Daily Tan
 
 This repository is **public** (required for free GitHub Pages). It contains only the website and demo; keep the main game project in a separate private repository.
 
+## Copyright
+
+© 2026 Gudthingz (Ottawa, Ontario, Canada). All rights reserved.
+
+Yarn Knots, its name, characters (including Biscuit, Sir Pounce, Miso, Pillow and Pepper), artwork, voice recordings, sounds, game design and code are the property of Gudthingz. This repository is public only so the website can be hosted; that does **not** grant any licence. You may not copy, modify, redistribute or reuse any part of it, including in other games, apps or websites, without written permission.
+
+Questions or permission requests: hello@yarnknots.com
+
 ## 1. Put the site on GitHub Pages
 
 1. On github.com, create a new repository named `yarnknots-site` (any name works). Set it to **Public**. Don't add a README.
@@ -33,11 +41,8 @@ GitHub's own guide, in case anything differs: docs.github.com → "Managing a cu
 
 All settings live in **`assets/config.js`**. Edit it on GitHub (open the file, click the pencil icon, paste, **Commit changes**).
 
-**Launch email signups: MailerLite (free up to 250 subscribers)**
-1. Sign up at mailerlite.com with hello@yarnknots.com.
-2. Create a subscriber group called "Launch list", then **Forms → Embedded forms → Create**, connect it to that group, and keep just the email field.
-3. Open the form's **HTML code** and find `action="https://assets.mailerlite.com/jsonp/.../subscribe"`. Copy that URL into `mailerliteFormUrl`.
-4. Test: sign up on yarnknots.com with your own address and check it appears in MailerLite.
+**Launch email signups: Sender.net (free up to 2,500 subscribers)**
+The signup form is a Sender.net embedded form ("Yarn Knots – Launch signup", group "Launch list", double opt-in). Its script and form id are placed directly in `index.html` and `play/index.html`, not in `config.js`. If the form doesn't load (an ad blocker, for example), the page shows an "email hello@yarnknots.com" message instead.
 
 **Contact form: Formspree (free, 50 messages a month)**
 1. Sign up at formspree.io with hello@yarnknots.com and create a new form.
@@ -48,19 +53,17 @@ All settings live in **`assets/config.js`**. Edit it on GitHub (open the file, c
 1. Sign up at goatcounter.com. Choose the code `yarnknots` (giving yarnknots.goatcounter.com).
 2. Put that code in `goatcounterCode`.
 3. Besides page views, the demo reports these events, which are what the ad test measures:
-   `demo-first-visit`, `demo-start-level-N`, `demo-complete-level-N`, `demo-help-free`, `demo-help-yarn`, `demo-daily-complete`, `demo-finished`, `signup-home`, `signup-demo-end`, `contact-sent`.
+   `demo-first-visit`, `demo-start-level-N`, `demo-complete-level-N`, `demo-help-free`, `demo-help-yarn`, `demo-daily-complete`, `demo-finished`, `contact-sent`, plus `playtest-page-open` and `playtest-feedback-sent` on the playtest page. (Email signups are counted in Sender.net.)
 
 **Socials:** the links in `config.js` assume the handle @yarnknots everywhere. Change any that differ, or delete a line to hide that icon.
 
-## 4. Fill in the legal placeholders
+## 4. Legal pages
 
-Search the site for text highlighted in yellow (`class="placeholder"`):
+The Privacy, Terms and Press pages name Gudthingz, Ottawa, Ontario, Canada as the operator (filled in October 14, 2026). Have a lawyer review the privacy policy and terms before running paid ads.
 
-- `privacy/index.html`: your legal name or company, and your city/province or state/country
-- `terms/index.html`: the same, plus the province/state whose laws apply
-- `press/index.html`: studio or developer name and location
+## Playtest page
 
-Have a lawyer review the privacy policy and terms before running paid ads.
+`playtest/index.html` (yarnknots.com/playtest) is a hidden page for testers: instructions plus a feedback form that sends to Formspree with the subject "Yarn Knots playtest feedback" and attaches the tester's demo progress from their browser. It isn't linked from the menu and asks search engines not to index it.
 
 ## Links for the ad test
 

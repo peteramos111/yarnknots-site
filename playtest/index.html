@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Playtest – Yarn Knots</title>
+<meta name="description" content="Help test Yarn Knots, a cozy cat puzzle game. Play the free demo for 10 minutes, then tell us what you think.">
+<meta name="robots" content="noindex">
+<meta property="og:title" content="Help playtest Yarn Knots">
+<meta property="og:description" content="A cozy cat puzzle game. Play the free demo for 10 minutes, then tell us what you think.">
+<meta property="og:image" content="https://yarnknots.com/assets/og-image.png">
+<meta name="theme-color" content="#f1e2ee">
+<link rel="icon" href="../assets/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="../assets/icon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chewy&family=Nunito:wght@400;600;700;800;900&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+.steps{list-style:none;padding:0;margin:20px 0;display:grid;gap:12px;counter-reset:s}
+.steps li{background:var(--mat);border-radius:18px;padding:14px 18px 14px 62px;position:relative;counter-increment:s;max-width:none}
+.steps li::before{content:counter(s);position:absolute;left:16px;top:12px;width:32px;height:32px;border-radius:50%;background:var(--tangle);color:#fff;font:400 20px/32px var(--display);text-align:center}
+.steps b{display:block}
+.pt-form{background:var(--mat);border-radius:22px;padding:22px;margin-top:20px}
+.pt-form fieldset{border:0;padding:0;margin:18px 0 0;min-width:0}
+.pt-form legend{font-weight:800;font-size:15px;margin-bottom:8px;padding:0}
+.pt-form legend small{font-weight:600;color:var(--muted)}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opts label{display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border:2px solid var(--stitch);border-radius:999px;background:#fff;font-weight:700;font-size:15px;cursor:pointer;line-height:1.2}
+.opts input{accent-color:var(--tangle);width:16px;height:16px;margin:0}
+.opts label:has(input:checked){border-color:var(--tangle);background:#ffeef3}
+.pt-form textarea{min-height:90px}
+.progress-note{font-size:14px;color:var(--muted);background:#f7e9f2;border-radius:12px;padding:10px 12px;margin:18px 0 0}
+.thanks{text-align:center;padding:28px 10px}
+.thanks img{width:120px;height:120px;border-radius:50%;margin:0 auto 10px;border:4px solid #fff}
+.thanks h2{font:400 32px/1.1 var(--display);color:var(--tangle);margin:0 0 6px}
+</style>
+<script src="../assets/config.js"></script>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../assets/icon-180.png" alt=""><span>Yarn Knots</span></a>
+    <nav class="nav" aria-label="Main">
+      <a class="btn small" href="../play/index.html?ref=playtest" target="_blank" rel="noopener">Play the demo</a>
+    </nav>
+  </div>
+</header>
+<main class="page">
+<h1>Help us playtest!</h1>
+<p class="meta">About 10–15 minutes · works best on your phone · no sign-up needed</p>
+<p>Yarn Knots is a cozy puzzle game: drag the yarn balls until no strings cross, while a cat watches, cheers and now and then swats a ball out of place. It isn’t finished yet, so your honest first impressions are exactly what we need. “This part was boring” is more useful to us than “it’s great!”</p>
+
+<ol class="steps">
+  <li><b>Open the demo in a new tab</b><a href="../play/index.html?ref=playtest" target="_blank" rel="noopener">yarnknots.com/play</a>. Please don’t read any tips first. We want to see if the game explains itself.</li>
+  <li><b>Play for about 10 minutes</b>Try to get through at least 5 levels (all 10 if you’re enjoying it), and try the <i>Daily Tangle</i> once. If you get stuck, it’s fine to use <i>Cat help</i> or give up. That tells us something too.</li>
+  <li><b>Come back to this page and answer the questions below</b>It takes about 3 minutes. Skip anything you don’t have an opinion on.</li>
+</ol>
+
+<form id="pt" class="pt-form" novalidate>
+  <fieldset>
+    <legend>What did you play on?</legend>
+    <div class="opts">
+      <label><input type="radio" name="device" value="Android phone">Android phone</label>
+      <label><input type="radio" name="device" value="iPhone">iPhone</label>
+      <label><input type="radio" name="device" value="Tablet">Tablet</label>
+      <label><input type="radio" name="device" value="Computer">Computer</label>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Overall, how much did you enjoy it?</legend>
+    <div class="opts">
+      <label><input type="radio" name="enjoyment" value="1 - Not for me">1 · Not for me</label>
+      <label><input type="radio" name="enjoyment" value="2">2</label>
+      <label><input type="radio" name="enjoyment" value="3 - It's okay">3 · It’s okay</label>
+      <label><input type="radio" name="enjoyment" value="4">4</label>
+      <label><input type="radio" name="enjoyment" value="5 - Loved it">5 · Loved it</label>
+    </div>
+  </fieldset>
+
+  <label class="fl" for="q-first">In the first minute, was anything confusing? What did you think you were supposed to do?</label>
+  <textarea id="q-first" name="first_minute"></textarea>
+
+  <fieldset>
+    <legend>How was the difficulty?</legend>
+    <div class="opts">
+      <label><input type="radio" name="difficulty" value="Too easy">Too easy</label>
+      <label><input type="radio" name="difficulty" value="About right">About right</label>
+      <label><input type="radio" name="difficulty" value="Too hard">Too hard</label>
+      <label><input type="radio" name="difficulty" value="Easy, then too hard">Easy, then suddenly too hard</label>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>The cat swatting balls out of place: fun or annoying?</legend>
+    <div class="opts">
+      <label><input type="radio" name="cat" value="Fun">Fun, it’s the best part</label>
+      <label><input type="radio" name="cat" value="Mixed">A bit of both</label>
+      <label><input type="radio" name="cat" value="Annoying">Annoying</label>
+      <label><input type="radio" name="cat" value="Didn't notice">Didn’t notice it</label>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Sounds and the cheering voice <small>(“Purr-fect!”, meows, purring)</small></legend>
+    <div class="opts">
+      <label><input type="radio" name="sound" value="Loved it">Loved it</label>
+      <label><input type="radio" name="sound" value="Fine">Fine</label>
+      <label><input type="radio" name="sound" value="Too much">Too much / turned it off</label>
+      <label><input type="radio" name="sound" value="Played muted">Played with sound off</label>
+    </div>
+  </fieldset>
+
+  <label class="fl" for="q-stuck">Was there a moment you got stuck, bored, or wanted to quit? What was happening?</label>
+  <textarea id="q-stuck" name="stuck_or_bored"></textarea>
+
+  <fieldset>
+    <legend>If the full game were free on your phone (with ads, no purchases), would you download it?</legend>
+    <div class="opts">
+      <label><input type="radio" name="would_download" value="Yes, definitely">Yes, definitely</label>
+      <label><input type="radio" name="would_download" value="Maybe">Maybe</label>
+      <label><input type="radio" name="would_download" value="Probably not">Probably not</label>
+    </div>
+  </fieldset>
+
+  <label class="fl" for="q-daily">What would make you come back and play every day?</label>
+  <textarea id="q-daily" name="come_back_daily"></textarea>
+
+  <label class="fl" for="q-bugs">Any bugs, glitches or things that looked broken? <span style="font-weight:600;color:var(--muted)">(level number helps)</span></label>
+  <textarea id="q-bugs" name="bugs"></textarea>
+
+  <label class="fl" for="q-email">Your email <span style="font-weight:600;color:var(--muted)">(optional, only if you’re happy for us to ask a follow-up question)</span></label>
+  <input id="q-email" type="email" name="email" autocomplete="email">
+
+  <p class="progress-note" id="prog-note">We’ll also include your demo progress from this browser (levels cleared, stars and best times) so we can see where people get to. Nothing else is collected.</p>
+  <input type="hidden" name="demo_progress" id="prog">
+  <input type="hidden" name="_subject" value="Yarn Knots playtest feedback">
+  <input type="hidden" name="form" value="playtest">
+  <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
+  <p style="font-size:14px;color:var(--muted)">See our <a href="../privacy/index.html">privacy policy</a>. We use your answers only to improve the game.</p>
+  <button class="btn" type="submit" id="pt-send">Send my feedback</button>
+  <p class="form-status" role="status" id="pt-status"></p>
+</form>
+
+<div class="pt-form thanks" id="pt-thanks" hidden>
+  <img src="../assets/biscuit.png" alt="Biscuit the cat">
+  <h2>Thank you!</h2>
+  <p style="margin:0 auto">Biscuit says purr-fect. Your feedback goes straight to the person making the game, and it really does shape what happens next.</p>
+  <p style="margin:16px auto 0"><a class="btn ghost" href="../index.html#signup">Get launch news</a></p>
+</div>
+</main>
+<footer>
+  <div class="wrap">
+    <div>© <span data-year>2026</span> Yarn Knots · <a data-email href="mailto:hello@yarnknots.com">hello@yarnknots.com</a></div>
+    <nav aria-label="Footer">
+      <a href="../play/index.html">Play</a><a href="../contact/index.html">Contact</a><a href="../privacy/index.html">Privacy</a><a href="../terms/index.html">Terms</a>
+    </nav>
+  </div>
+</footer>
+<script src="../assets/site.js"></script>
+<script>
+(function () {
+  var C = window.YK_CONFIG || {};
+  var form = document.getElementById('pt'), status = document.getElementById('pt-status'), btn = document.getElementById('pt-send');
+
+  // Summarize the demo's saved progress in this browser (same site, so it's readable here).
+  function progress() {
+    var s = {};
+    try { s = JSON.parse(localStorage.getItem('yarn-knots-v1')) || {}; } catch (e) {}
+    if (!s.firstPlay) return 'No demo progress found in this browser (played on another device or browser?)';
+    var stars = s.stars || {}, levels = Object.keys(stars).filter(function (k) { return /^\d+$/.test(k); }).sort(function (a, b) { return a - b; });
+    var total = levels.reduce(function (n, k) { return n + (stars[k] || 0); }, 0);
+    var best = s.best || {}, times = levels.map(function (k) { var t = best[k]; return 'L' + k + ' ' + (t ? Math.round(t / 1000) + 's' : '?') + ' ' + (stars[k] || 0) + '★'; });
+    var daily = Object.keys(s.daily || {}).length;
+    var mins = Math.round((Date.now() - s.firstPlay) / 60000);
+    return 'Levels cleared: ' + levels.length + ' (highest unlocked ' + (s.unlocked || 1) + ') · stars ' + total +
+      ' · Daily Tangles solved: ' + daily + ' · sound ' + (s.sound === false ? 'off' : 'on') + ', voice ' + (s.voice === false ? 'off' : 'on') +
+      ' · first played ' + mins + ' min ago' + (times.length ? ' · ' + times.join(', ') : '');
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var answered = Array.prototype.some.call(form.elements, function (el) {
+      return el.name && el.type !== 'hidden' && el.name !== '_gotcha' && el.name !== 'email' && (el.type === 'radio' ? el.checked : el.value.trim());
+    });
+    if (!answered) { status.textContent = 'Please answer at least one question before sending.'; status.className = 'form-status err'; return; }
+    if (!C.formspreeUrl) { status.textContent = 'The form isn’t connected yet. Please email your thoughts to ' + C.contactEmail + '.'; status.className = 'form-status err'; return; }
+    document.getElementById('prog').value = progress();
+    btn.disabled = true; status.textContent = 'Sending…'; status.className = 'form-status';
+    fetch(C.formspreeUrl, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } })
+      .then(function (r) {
+        if (!r.ok) throw new Error('bad');
+        form.hidden = true; document.getElementById('pt-thanks').hidden = false;
+        document.getElementById('pt-thanks').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        if (window.ykEvent) window.ykEvent('playtest-feedback-sent');
+      })
+      .catch(function () { status.textContent = 'That didn’t go through. Please try again, or email ' + C.contactEmail + '.'; status.className = 'form-status err'; })
+      .finally(function () { btn.disabled = false; });
+  });
+  if (window.ykEvent) window.ykEvent('playtest-page-open');
+})();
+</script>
+</body>
+</html>
