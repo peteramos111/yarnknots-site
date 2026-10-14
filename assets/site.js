@@ -1,4 +1,4 @@
-/* Shared behaviour for every Yarn Knots page: stats, signup and contact forms, social links, footer year. */
+/* Shared behaviour for every Yarn Knots page: stats, contact form, social links, footer year. */
 (function () {
   var C = window.YK_CONFIG || {};
 
@@ -10,16 +10,17 @@
     s.setAttribute('data-goatcounter', 'https://' + C.goatcounterCode + '.goatcounter.com/count');
     document.head.appendChild(s);
   }
-  // Count a named event, e.g. ykEvent('demo-level-3'). Safe to call before stats load.
-  window.ykEvent = function (name) {
-    try {
-      if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: name, title: name, event: true });
-      else (window.ykQueue = window.ykQueue || []).push(name);
-    } catch (e) {}
-  };
-  window.addEventListener('load', function () {
-    setTimeout(function () { (window.ykQueue || []).forEach(window.ykEvent); window.ykQueue = []; }, 1500);
-  });
+  // Count a named event, e.g. ykEvent('demo-level-3'). Events wait in a queue until the stats script is ready.
+  var queue = window.ykQueue = window.ykQueue || [];
+  function gcReady() { return window.goatcounter && typeof window.goatcounter.count === 'function'; }
+  function send(name) { try { window.goatcounter.count({ path: name, title: name, event: true }); } catch (e) {} }
+  var tries = 0;
+  function flush() {
+    if (gcReady()) { queue.splice(0).forEach(send); return; }
+    if (C.goatcounterCode && tries++ < 30) setTimeout(flush, 1000);
+  }
+  window.ykEvent = function (name) { queue.push(name); flush(); };
+  window.addEventListener('load', function () { setTimeout(flush, 500); });
 
   function status(form, msg, ok) {
     var el = form.querySelector('.form-status');
@@ -27,29 +28,6 @@
     el.textContent = msg;
     el.className = 'form-status ' + (ok ? 'ok' : 'err');
   }
-
-  // Launch email signup (MailerLite).
-  document.querySelectorAll('form[data-signup]').forEach(function (form) {
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      var email = form.querySelector('input[type=email]').value.trim();
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { status(form, 'Please enter a valid email address.', false); return; }
-      if (!form.querySelector('input[name=consent]').checked) { status(form, 'Please tick the box so we can email you.', false); return; }
-      if (!C.mailerliteFormUrl) { status(form, 'Signups open very soon. Please check back in a day or two!', false); return; }
-      var data = new FormData();
-      data.append('fields[email]', email);
-      data.append('ml-submit', '1');
-      data.append('anticsrf', 'true');
-      var btn = form.querySelector('button'); btn.disabled = true;
-      fetch(C.mailerliteFormUrl, { method: 'POST', body: data, mode: 'no-cors' })
-        .then(function () {
-          status(form, 'You’re on the list! Biscuit will let you know the moment Yarn Knots launches.', true);
-          form.reset(); window.ykEvent('signup-' + (form.getAttribute('data-signup') || 'site'));
-        })
-        .catch(function () { status(form, 'That didn’t go through. Please try again, or email ' + C.contactEmail + '.', false); })
-        .finally(function () { btn.disabled = false; });
-    });
-  });
 
   // Contact form (Formspree).
   document.querySelectorAll('form[data-contact]').forEach(function (form) {
