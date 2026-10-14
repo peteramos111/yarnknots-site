@@ -109,3 +109,8 @@ footer a:hover{color:var(--tangle)}
 .socials a{width:40px;height:40px;border-radius:50%;background:var(--mat);display:grid;place-items:center;border:2px solid var(--stitch)}
 .socials svg{width:18px;height:18px;fill:var(--ink)}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn{transition:none}}
+
+/* Sender.net embedded form */
+.signup-form{min-width:0}
+.sender-form-field{min-height:120px}
+.signup-fallback{font-weight:700;color:var(--muted)}

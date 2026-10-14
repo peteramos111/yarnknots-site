@@ -76,5 +76,12 @@
     el.textContent = C.contactEmail;
     if (el.tagName === 'A') el.href = 'mailto:' + C.contactEmail;
   });
+  // Sender.net form: if it hasn't appeared after 8 seconds (ad blocker, network), show an email fallback instead.
+  setTimeout(function () {
+    document.querySelectorAll('.signup-form').forEach(function (box) {
+      var f = box.querySelector('.sender-form-field'), fb = box.querySelector('.signup-fallback');
+      if (f && fb && !f.children.length) { f.style.minHeight = '0'; fb.hidden = false; }
+    });
+  }, 8000);
   document.querySelectorAll('[data-year]').forEach(function (el) { el.textContent = new Date().getFullYear(); });
 })();
