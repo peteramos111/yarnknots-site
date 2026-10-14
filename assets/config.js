@@ -12,7 +12,7 @@ window.YK_CONFIG = {
   formspreeUrl: "",
 
   // GoatCounter: your site code (the part before .goatcounter.com). Example: "yarnknots"
-  goatcounterCode: "",
+  goatcounterCode: "yarnknots",
 
   // Social profiles. Remove any you don't use.
   socials: {
