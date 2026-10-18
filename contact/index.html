@@ -4,52 +4,68 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Contact – Yarn Knots</title>
-<meta name="description" content="Get in touch with the Yarn Knots team.">
+<meta name="description" content="Questions, bug reports, press or partnerships: get in touch with Yarn Knots.">
 <meta property="og:title" content="Contact – Yarn Knots">
-<meta property="og:description" content="Get in touch with the Yarn Knots team.">
+<meta property="og:description" content="Questions, bug reports, press or partnerships: get in touch with Yarn Knots.">
 <meta property="og:image" content="https://yarnknots.com/assets/og-image.png">
-<meta name="theme-color" content="#f1e2ee">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#F3EDE4">
 <link rel="icon" href="../assets/favicon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="../assets/icon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chewy&family=Nunito:wght@400;600;700;800;900&display=swap">
 <link rel="stylesheet" href="../assets/style.css">
 <script src="../assets/config.js"></script>
 </head>
 <body>
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="../index.html"><img src="../assets/icon-180.png" alt=""><span>Yarn Knots</span></a>
+    <a class="brand" href="../index.html"><img src="../assets/icon-180.png" alt=""><span>Yarn Knots<sup style="font-size:.45em;vertical-align:.9em;line-height:0;margin-left:1px">™</sup></span></a>
     <nav class="nav" aria-label="Main">
-      <a href="../index.html#cats">The cats</a>
+      <a href="../index.html#how">How it plays</a>
+      <a href="../index.html#biscuit">Meet Biscuit</a>
       <a href="../index.html#signup">Launch news</a>
       <a href="../press/index.html">Press</a>
       <a class="btn small" href="../play/index.html">Play the demo</a>
     </nav>
   </div>
 </header>
-<main class="page">
-<h1>Contact us</h1>
-<p class="meta">We read every message. We usually reply within two business days.</p>
-<p>For anything at all, from a bug in the demo to a press question, email <a data-email href="mailto:hello@yarnknots.com">hello@yarnknots.com</a> or use the form below.</p>
-<form data-contact novalidate style="background:var(--mat);border-radius:22px;padding:22px;margin-top:20px">
-  <label class="fl" for="c-name">Your name</label>
-  <input id="c-name" type="text" name="name" required autocomplete="name">
-  <label class="fl" for="c-email">Your email</label>
-  <input id="c-email" type="email" name="email" required autocomplete="email">
-  <label class="fl" for="c-topic">What’s it about?</label>
-  <input id="c-topic" type="text" name="topic" placeholder="Bug report, feedback, press, partnership…">
-  <label class="fl" for="c-msg">Message</label>
-  <textarea id="c-msg" name="message" required></textarea>
-  <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
-  <p style="font-size:14px;color:var(--muted)">We use your details only to reply to you. See our <a href="../privacy/index.html">privacy policy</a>.</p>
-  <button class="btn" type="submit">Send message</button>
-  <p class="form-status" role="status"></p>
-</form>
-<h2>Found a bug in the demo?</h2>
-<p>Tell us which level you were on, what you expected to happen, and what happened instead. The phone or browser you were using helps too.</p>
-
+<div class="page-head">
+  <div class="wrap">
+    <p class="eyebrow">Contact</p>
+    <h1>Say hello. <em>Biscuit is listening.</em></h1>
+    <p class="lead">We read every message and usually reply within two business days. You can also email <a data-email href="mailto:hello@yarnknots.com">hello@yarnknots.com</a>.</p>
+  </div>
+</div>
+<main class="page doc">
+  <div class="contact-grid">
+    <div class="contact-side">
+      <div class="tip"><h3>Found a bug in the demo?</h3><p>Tell us which level you were on, what you expected, and what happened instead. Your phone or browser helps too.</p></div>
+      <div class="tip"><h3>Writing about the game?</h3><p>The <a href="../press/index.html">press kit</a> has screenshots, a clip, the icon and the facts. Pick “Press” below for anything else.</p></div>
+      <div class="tip quote">“Biscuit has read your message. Biscuit has opinions about it.”</div>
+    </div>
+    <form class="form-card" data-contact novalidate>
+      <input type="hidden" name="_subject" value="Yarn Knots website message">
+      <div class="two">
+        <div><label class="fl" for="c-name">Your name</label><input id="c-name" type="text" name="name" required autocomplete="name"></div>
+        <div><label class="fl" for="c-email">Your email</label><input id="c-email" type="email" name="email" required autocomplete="email"></div>
+      </div>
+      <label class="fl" for="c-topic">What’s it about?</label>
+      <select id="c-topic" name="topic">
+        <option>Feedback on the demo</option>
+        <option>Bug in the demo</option>
+        <option>Press</option>
+        <option>Partnership or business</option>
+        <option>Something else</option>
+      </select>
+      <label class="fl" for="c-msg">Message</label>
+      <textarea id="c-msg" name="message" required placeholder="Tell us anything. Biscuit can’t read, so be as honest as you like."></textarea>
+      <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
+      <p class="small">We use your details only to reply to you. See our <a href="../privacy/index.html">privacy policy</a>.</p>
+      <button class="btn" type="submit">Send message</button>
+      <p class="form-status" role="status"></p>
+    </form>
+  </div>
 </main>
 <footer>
   <div class="wrap">
