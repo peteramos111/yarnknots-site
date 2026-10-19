@@ -118,10 +118,10 @@ button:disabled{opacity:.45; cursor:default}
 .rk.me{background:var(--terra); color:var(--card); font-weight:800; z-index:1}
 .rk.me .yy{color:var(--card)}
 #reward{margin:12px 0 0; background:var(--ledge); color:var(--card); border-radius:14px; padding:10px 14px; font-weight:700; font-size:15px; line-height:1.35}
+#next{width:100%; justify-content:center; margin-top:16px; padding:0 18px; background:var(--terra)}
 .foot{margin:14px 0 0; text-align:center; font-size:13px; color:var(--soft)}
 .foot a{color:var(--soft)}
 .signup-form .sender-form-field{text-align:center}.signup-form .sender-form-field iframe{display:block;margin-inline:auto}
-#next{width:100%; justify-content:center; margin-top:16px; padding:0 18px; background:var(--terra)}
 #ad{position:absolute; inset:0; z-index:9; background:rgba(46,42,38,.82); display:flex; align-items:center; justify-content:center}
 .adBox{width:min(340px, calc(100% - 32px)); background:var(--card); border-radius:22px; padding:18px; box-sizing:border-box}
 .adBox .tag{font-size:11px; font-weight:800; letter-spacing:1.8px; text-transform:uppercase; color:var(--soft)}
@@ -152,6 +152,25 @@ body{background:#2A1D14}
 .edge .halo{stroke:#E4573B; opacity:0 !important; transition:opacity .35s}
 .edge.x .halo{opacity:.75 !important}
 .edge .base,.edge .ply,.edge .ply2{stroke:inherit}
+[hidden]{display:none !important} /* keep closed panels from blocking taps on any host */
+/* Settings: gear in the top bar opens a card with on/off switches and volume sliders. */
+.topRight{display:flex; align-items:center; gap:8px}
+.gear{width:34px; height:34px; padding:0; border:0; border-radius:999px; background:var(--chipBg); color:var(--ink); display:flex; align-items:center; justify-content:center; cursor:pointer; flex:none}
+#settings{position:absolute; inset:0; z-index:8; background:rgba(46,42,38,.6); display:flex; align-items:center; justify-content:center}
+.setBox{width:min(360px, calc(100% - 32px)); max-height:calc(100% - 32px); overflow-y:auto; background:var(--card); border-radius:22px; padding:18px 18px 16px; box-sizing:border-box; box-shadow:0 12px 34px rgba(30,15,5,.35)}
+.setBox h2{margin:0 0 6px; font-family:var(--display); font-size:24px; font-weight:500; letter-spacing:-.3px}
+.setRow{padding:12px 0; border-top:1px solid var(--chipBg)}
+.setTop{display:flex; align-items:center; justify-content:space-between; gap:12px}
+.setName{font-size:16px; font-weight:700}
+.setNote{margin-top:2px; font-size:12.5px; line-height:1.35; color:var(--soft)}
+.sw{position:relative; width:50px; height:30px; flex:none; padding:0; border:0; border-radius:999px; background:#D6CCBE; cursor:pointer; transition:background .2s}
+.sw::after{content:''; position:absolute; top:3px; left:3px; width:24px; height:24px; border-radius:50%; background:#fff; box-shadow:0 1px 3px rgba(0,0,0,.25); transition:transform .2s}
+.sw[aria-checked="true"]{background:var(--ledge)}
+.sw[aria-checked="true"]::after{transform:translateX(20px)}
+.vol{display:block; width:100%; margin:10px 0 0; accent-color:var(--terra)}
+.vol:disabled{opacity:.35}
+#setDone{width:100%; justify-content:center; margin-top:14px; padding:0 18px; background:var(--terra)}
+@media (prefers-reduced-motion: reduce){ .sw,.sw::after{transition:none} }
 </style>
 </head>
 <body>
@@ -164,9 +183,12 @@ body{background:#2A1D14}
   <div class="hud">
   <header class="top gutter">
     <a class="brand" href="/" title="Yarn Knots home" style="color:inherit;text-decoration:none">Yarn Knots<sup style="font-size:.45em;vertical-align:.9em;line-height:0;margin-left:1px">™</sup></a>
-    <div class="chips">
-      <div class="chip" id="rankChip">#9</div>
-      <div class="chip" id="yarnChip">0 yarn</div>
+    <div class="topRight">
+      <div class="chips">
+        <div class="chip" id="rankChip">#9</div>
+        <div class="chip" id="yarnChip">0 yarn</div>
+      </div>
+      <button class="gear" id="gear" type="button" aria-label="Settings"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg></button>
     </div>
   </header>
 
@@ -259,12 +281,13 @@ body{background:#2A1D14}
     <div class="ranks" id="ranks"></div>
     <div id="reward" hidden aria-live="polite">You reached #1. Biscuit is impressed: +3 hints.</div>
     <div id="demoEnd" hidden>
-      <p class="line" style="margin-top:14px">That’s the demo. The full game has many more tangles, and Biscuit has many more opinions.</p>
+      <p class="line" style="margin-top:14px">That’s the demo. The full game has many more tangles, and Biscuit has many more opinions. Get one email when it launches:</p>
       <div class="signup-form" style="background:var(--oat);border-radius:14px;padding:10px;margin-top:10px">
         <div class="sender-form-field" data-sender-form-id="mv7i5nttbmzvqaj51vb"></div>
         <p class="signup-fallback" hidden style="margin:8px;font-weight:600;font-size:14px;color:var(--soft)">The signup form didn’t load (an ad blocker can do this). Try pausing your ad blocker for this page and reloading.</p>
       </div>
     </div>
+    <button class="btn" id="next" type="button">Next level</button>
     <button class="btn" id="next" type="button">Next level</button>
     <p class="foot">Free demo · <a href="/">yarnknots.com</a> · <a href="/contact/">Contact</a> · <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a></p>
   </section>
@@ -281,6 +304,32 @@ body{background:#2A1D14}
         <button class="btn" id="adSkip" type="button">No thanks</button>
         <button class="btn" id="adClaim" type="button" disabled>Get hint</button>
       </div>
+    </div>
+  </div>
+
+  <div id="settings" hidden role="dialog" aria-modal="true" aria-labelledby="setTitle">
+    <div class="setBox">
+      <h2 id="setTitle">Settings</h2>
+      <div class="setRow">
+        <div class="setTop"><div><div class="setName">Voice</div><div class="setNote">Biscuit’s narrator reads the speech bubbles.</div></div>
+          <button class="sw" type="button" role="switch" data-k="voice" aria-label="Voice"></button></div>
+        <input class="vol" type="range" min="0" max="100" step="5" data-v="voiceVol" aria-label="Voice volume">
+      </div>
+      <div class="setRow">
+        <div class="setTop"><div><div class="setName">Sound</div><div class="setNote">Yarn, swats, hints and level wins.</div></div>
+          <button class="sw" type="button" role="switch" data-k="sound" aria-label="Sound effects"></button></div>
+        <input class="vol" type="range" min="0" max="100" step="5" data-v="soundVol" aria-label="Sound volume">
+      </div>
+      <div class="setRow">
+        <div class="setTop"><div><div class="setName">Music</div><div class="setNote">Quiet café music in the background.</div></div>
+          <button class="sw" type="button" role="switch" data-k="music" aria-label="Music"></button></div>
+        <input class="vol" type="range" min="0" max="100" step="5" data-v="musicVol" aria-label="Music volume">
+      </div>
+      <div class="setRow">
+        <div class="setTop"><div><div class="setName">Vibration</div><div class="setNote" id="vibeNote">A small buzz when Biscuit swats and when you win.</div></div>
+          <button class="sw" type="button" role="switch" data-k="vibe" aria-label="Vibration"></button></div>
+      </div>
+      <button class="btn" id="setDone" type="button">Done</button>
     </div>
   </div>
 </div>
@@ -311,27 +360,135 @@ body{background:#2A1D14}
     half:['Halfway. Biscuit has stopped pretending not to watch.'],
     one:['One left. Biscuit is leaning in.'],
     worse:['Bold move.','Interesting choice.','Biscuit has seen worse. Not often.'],
-    swat:['Biscuit would like to help. Biscuit will not be helping.','Biscuit helped.','That one was in his way.','He’s not sorry.'],
+    swat:['Biscuit moved that for you. You’re welcome.','Oops. Biscuit’s paw slipped. Totally an accident.','Biscuit wanted to help. He didn’t.','Biscuit is helping. Sort of.','That ball was in Biscuit’s way. Obviously.','Biscuit says that’s better. It isn’t.'],
     hint:['There. Don’t tell Biscuit.','A small nudge. Biscuit saw nothing.'],
     restart:['Back to the start. Biscuit saw nothing.'],
-    win:['Untangled. Biscuit will take it from here.','Clean. Biscuit gives it a slow blink.','Every string clear. Biscuit is, briefly, impressed.'],
+    win:['Untangled. Biscuit will take it from here.','Clean. Biscuit gives it a slow blink.','Every string clear. Biscuit was impressed… briefly.'],
     catWin:['Biscuit solved it. He’ll be insufferable now.']
   };
 
-  const ev = name => { try { if (window.ykEvent) window.ykEvent(name); } catch(e){} };
   // ---------- saved progress (hints, yarn, bonus) ----------
+  const ev = name => { try { if (window.ykEvent) window.ykEvent(name); } catch(e){} };
   const KEY = 'yk-site-state-v1';
   let S = {lvl:0, hints:START_HINTS, undos:START_UNDOS, restarts:START_RESTARTS, yarn:0, bonusAt:0};
   try { const v = JSON.parse(localStorage.getItem(KEY) || 'null'); if (v && typeof v.hints === 'number') S = Object.assign(S, v); } catch(e){}
   function save(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e){} }
 
+  // ---------- settings (saved on this device) ----------
+  const SET_KEY = 'yk-settings-v1';
+  let SET = {voice:true, sound:true, music:true, vibe:true, voiceVol:80, soundVol:70, musicVol:40};
+  try { const v = JSON.parse(localStorage.getItem(SET_KEY) || 'null'); if (v && typeof v === 'object') SET = Object.assign(SET, v); } catch(e){}
+  function saveSet(){ try { localStorage.setItem(SET_KEY, JSON.stringify(SET)); } catch(e){} }
+  const canVibe = typeof navigator.vibrate === 'function'; // Android browsers yes; iPhone Safari no
+  function buzz(p){ if (SET.vibe && canVibe){ try { navigator.vibrate(p); } catch(e){} } }
+  // Audio hooks. Files get listed here once they exist; until then these stay silent.
+  const VOICE_FILES = {    // speech-bubble text -> voice clip (Hollie Sue, ElevenLabs v4). Lines without a clip just show the bubble.
+    'Biscuit moved that for you. You’re welcome.': 'voice-hollie/swat-1-moved-that.mp3',
+    'Oops. Biscuit’s paw slipped. Totally an accident.': 'voice-hollie/swat-2-paw-slipped.mp3',
+    'Biscuit wanted to help. He didn’t.': 'voice-hollie/swat-3-wanted-to-help.mp3',
+    'Biscuit is helping. Sort of.': 'voice-hollie/swat-4-is-helping.mp3',
+    'That ball was in Biscuit’s way. Obviously.': 'voice-hollie/swat-5-in-his-way.mp3',
+    'Biscuit says that’s better. It isn’t.': 'voice-hollie/swat-6-says-better.mp3',
+    'Bold move.': 'voice-hollie/worse-1-bold-move.mp3',
+    'Every string clear. Biscuit was impressed… briefly.': 'voice-hollie/win-every-string.mp3',
+    'Biscuit is supervising.': 'voice-hollie/start-1-supervising.mp3',
+    'Biscuit has opinions about this one.': 'voice-hollie/start-2-opinions.mp3',
+    'Take your time. Biscuit has nowhere to be.': 'voice-hollie/start-3-take-your-time.mp3',
+    'Better.': 'voice-hollie/better-1-better.mp3',
+    'Neat.': 'voice-hollie/better-2-neat.mp3',
+    'That’s the one.': 'voice-hollie/better-3-thats-the-one.mp3',
+    'Biscuit approves, quietly.': 'voice-hollie/better-4-approves.mp3',
+    'On a roll. Biscuit is pretending not to watch.': 'voice-hollie/combo-1-on-a-roll.mp3',
+    'Three in a row. Biscuit’s tail just twitched.': 'voice-hollie/combo-2-three-in-a-row.mp3',
+    'Halfway. Biscuit has stopped pretending not to watch.': 'voice-hollie/half-halfway.mp3',
+    'One left. Biscuit is leaning in.': 'voice-hollie/one-left.mp3',
+    'Interesting choice.': 'voice-hollie/worse-2-interesting.mp3',
+    'Biscuit has seen worse. Not often.': 'voice-hollie/worse-3-seen-worse.mp3',
+    'There. Don’t tell Biscuit.': 'voice-hollie/hint-1-dont-tell.mp3',
+    'A small nudge. Biscuit saw nothing.': 'voice-hollie/hint-2-small-nudge.mp3',
+    'Back to the start. Biscuit saw nothing.': 'voice-hollie/restart-back-to-start.mp3',
+    'Swat undone. That one’s on the house.': 'voice-hollie/undo-swat-on-the-house.mp3',
+    'Nothing to undo yet.': 'voice-hollie/undo-nothing-yet.mp3',
+    'Untangled. Biscuit will take it from here.': 'voice-hollie/win-1-take-it-from-here.mp3',
+    'Clean. Biscuit gives it a slow blink.': 'voice-hollie/win-2-slow-blink.mp3',
+    'Biscuit solved it. He’ll be insufferable now.': 'voice-hollie/catwin-insufferable.mp3',
+    'Biscuit has spotted something.': 'voice-hollie/swat-spotted.mp3',
+    'Fine. Biscuit wasn’t interested anyway.': 'voice-hollie/swat-not-interested.mp3',
+    'Biscuit is yawning. No pressure.': 'voice-hollie/yawn-yawning.mp3',
+    'Already at the start. Biscuit checked.': 'voice-hollie/restart-already-at-start.mp3',
+    'Stuck? Try a hint. Biscuit won’t judge. Much.': 'voice-hollie/stuck-try-a-hint.mp3'
+  };
+  const SFX_FILES = {      // game moment -> sound clip (ElevenLabs sound effects, levelled to sit under the voice)
+    pick:'sounds/pick.mp3', drop:'sounds/drop.mp3', swat:'sounds/swat.mp3', hint:'sounds/hint.mp3',
+    undo:'sounds/undo.mp3', win:'sounds/win.mp3', tap:'sounds/tap.mp3', purr:'sounds/purr.mp3'
+  };
+  const SFX_GAIN = {purr: .75, tap: .8};   // a touch quieter than the rest
+  const SFX_CACHE = {};
+  Object.entries(SFX_FILES).forEach(([k, f]) => { try { const a = new Audio(f); a.preload = 'auto'; SFX_CACHE[k] = a; } catch(e){} });
+  const MUSIC_FILE = 'music/cafe-loop.mp3';   // calm café loop (ElevenLabs Music), edited to repeat seamlessly
+  // One reusable audio element for the voice. Phones (iPhone especially) only let a page play sound
+  // after a tap, so the first tap "unlocks" this element silently and later lines can play on their own.
+  const voiceNow = new Audio(); voiceNow.preload = 'auto';
+  let voiceUnlocked = false;
+  window.addEventListener('pointerdown', () => {
+    if (voiceUnlocked) return; voiceUnlocked = true;
+    try { voiceNow.muted = true; voiceNow.src = VOICE_FILES['Bold move.']; voiceNow.play().then(() => { voiceNow.pause(); voiceNow.muted = false; }).catch(() => { voiceNow.muted = false; }); } catch(e){}
+    // unlock the sound effects the same way, so swats and wins can play later without a tap
+    Object.values(SFX_CACHE).forEach(a => { try { a.muted = true; a.play().then(() => { a.pause(); a.currentTime = 0; a.muted = false; }).catch(() => { a.muted = false; }); } catch(e){} });
+  }, {once: true});
+  Object.values(VOICE_FILES).forEach(f => { try { const l = document.createElement('link'); l.rel = 'prefetch'; l.href = f; document.head.appendChild(l); } catch(e){} });
+  let voiceWait = 0;
+  function playVoice(line){
+    const f = VOICE_FILES[line]; if (!SET.voice || !f) return;
+    clearTimeout(voiceWait);
+    // If Hollie is about to finish a line, let her finish before starting the next one.
+    const left = (!voiceNow.paused && isFinite(voiceNow.duration)) ? voiceNow.duration - voiceNow.currentTime : 0;
+    if (left > 0 && left < 1.2){ voiceWait = setTimeout(() => playVoice(line), left*1000 + 80); return; }
+    try {
+      voiceNow.pause(); voiceNow.muted = false; voiceNow.src = f; voiceNow.volume = SET.voiceVol/100;
+      // keep the bubble up until Hollie finishes the line
+      voiceNow.onloadedmetadata = () => { const need = voiceNow.duration*1000 + 700; if (isFinite(need)){ clearTimeout(bubbleT); bubbleT = setTimeout(() => $('bubble').classList.add('off'), need); } };
+      voiceNow.play().catch(() => {});
+    } catch(e){}
+  }
+  function sfx(name){
+    const base = SFX_CACHE[name]; if (!SET.sound || !base) return;
+    try {
+      // reuse the preloaded clip; if it is still playing (two quick moves), play a copy alongside it
+      const a = (base.paused || base.ended) ? base : base.cloneNode();
+      a.muted = false; a.currentTime = 0; a.volume = Math.min(1, SET.soundVol/100 * (SFX_GAIN[name] || 1)); a.play().catch(() => {});
+    } catch(e){}
+  }
+  // Music plays through Web Audio so the loop repeats with no tiny gap (a plain <audio> loop clicks on MP3).
+  let musicCtx = null, musicGain = null, musicBuf = null, musicSrc = null, musicLoading = false;
+  const musicLevel = () => Math.pow(SET.musicVol/100, 1.6);   // gentler curve, so low slider values stay quiet
+  function syncMusic(){
+    if (!MUSIC_FILE) return;
+    try {
+      if (!musicCtx){ const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return; musicCtx = new AC(); musicGain = musicCtx.createGain(); musicGain.connect(musicCtx.destination); }
+      musicGain.gain.setTargetAtTime(SET.music ? musicLevel() : 0, musicCtx.currentTime, .25);
+      if (!SET.music || document.hidden){ if (musicCtx.state === 'running') setTimeout(() => { if (!SET.music || document.hidden) musicCtx.suspend(); }, 600); return; }
+      musicCtx.resume();
+      if (musicSrc) return;
+      if (musicBuf){ musicSrc = musicCtx.createBufferSource(); musicSrc.buffer = musicBuf; musicSrc.loop = true; musicSrc.connect(musicGain); musicGain.gain.value = 0; musicGain.gain.setTargetAtTime(musicLevel(), musicCtx.currentTime, 1.2); musicSrc.start(); return; }
+      if (musicLoading) return; musicLoading = true;
+      fetch(MUSIC_FILE).then(r => r.arrayBuffer()).then(b => new Promise((ok, no) => musicCtx.decodeAudioData(b, ok, no))).then(buf => { musicBuf = buf; musicLoading = false; syncMusic(); }).catch(() => { musicLoading = false; });
+    } catch(e){}
+  }
+  document.addEventListener('visibilitychange', syncMusic);   // pause when the app is in the background
+
   // ---------- cat speech bubble ----------
-  let lastLine = '', bubbleT = 0;
+  let lastLine = '', bubbleT = 0, lastSpokeAt = -1e9;
+  // Optional comments stay quiet for 12 s after Hollie last spoke, so she never talks over the game.
+  const QUIET_MS = 12000;
+  const quiet = () => performance.now() - lastSpokeAt < QUIET_MS;
   function speak(text, ms){
+    lastSpokeAt = performance.now();
     const b = $('bubble'); b.classList.add('off');
-    setTimeout(() => { b.textContent = text; b.classList.remove('off'); }, reduce ? 0 : 160);
+    setTimeout(() => { b.textContent = text; b.classList.remove('off'); playVoice(text); }, reduce ? 0 : 160);
     clearTimeout(bubbleT); bubbleT = setTimeout(() => b.classList.add('off'), ms || 4200);
   }
+  function sayLine(text){ lastLine = text; speak(text); return text; } // a specific line
   function say(key){
     const arr = LINES[key]; let line = arr[Math.floor(Math.random()*arr.length)];
     if (line === lastLine && arr.length > 1) line = arr[(arr.indexOf(line)+1) % arr.length];
@@ -387,7 +544,9 @@ body{background:#2A1D14}
   let edgeEls = [], shadowEls = [], ballEls = [];
   let dragging = null, busy = false, won = false, undoStack = [];
   let prevC = 0, initialC = 0, goodRun = 0, saidHalf = false, saidOne = false, stuckSaid = false;
-  let t0 = 0, timerId = 0, swatId = 0;
+  let t0 = 0, timerId = 0, swatId = 0, lastMoveAt = 0, lastIdleSayAt = 0;
+  const TAKE_TIME = 'Take your time. Biscuit has nowhere to be.';
+  const IDLE_MS = 60000; // say TAKE_TIME after a minute with no moves, then about once a minute
   // #1 bonus: at most once every 24 hours (saved on the device; the real app should use server time)
   const DAY = 24*60*60*1000;
   const bonusReady = () => !S.bonusAt || Date.now() - S.bonusAt >= DAY;
@@ -544,20 +703,30 @@ body{background:#2A1D14}
     goodRun = 0; saidHalf = saidOne = stuckSaid = false;
     $('levelLabel').textContent = `Level ${S.lvl+1} of ${LEVELS.length}`;
     cat.classList.remove('happy'); $('sheet').hidden = true; updateHud();
-    say('start');
+    // Levels 3, 6, 9… open with "Take your time…"; other levels use the other start lines.
+    if (S.lvl % 3 === 2) sayLine(TAKE_TIME);
+    else sayLine((o => o[Math.floor(Math.random()*o.length)])(LINES.start.filter(l => l !== TAKE_TIME)));
+    lastMoveAt = lastIdleSayAt = performance.now();
     t0 = performance.now(); tick(); clearInterval(timerId); timerId = setInterval(tick, 500);
-    scheduleSwat(9000, 13000); scheduleIdle();
+    scheduleSwat(6000, 9000); scheduleIdle();
   }
   function tick(){
-    if (won) return;
+    if (won || !$('settings').hidden) return; // the clock pauses while Settings is open
+    const nowMs = performance.now();
+    // After a minute with no moves Hollie nudges, then about once a minute while still idle,
+    // alternating "Stuck? Try a hint…" (first, with a Biscuit yawn) and "Take your time…".
+    if (prevC > 0 && $('ad').hidden && nowMs - lastMoveAt >= IDLE_MS && nowMs - lastIdleSayAt >= IDLE_MS && !quiet()){
+      lastIdleSayAt = nowMs;
+      if (!stuckSaid){
+        stuckSaid = true; react('yawn', 1);
+        sayLine(S.hints > 0 ? 'Stuck? Try a hint. Biscuit won’t judge. Much.' : 'Stuck? A short video gets you a hint.');
+      } else { stuckSaid = false; sayLine(TAKE_TIME); }
+    }
     const t = (performance.now() - t0) / 1000, b = getBest();
     $('time').textContent = `${fmt(t)} · best ${b == null ? '—' : fmt(b)}`;
-    if (!stuckSaid && t > 45 && prevC > 0){
-      stuckSaid = true; react('yawn', 1);
-      speak(S.hints > 0 ? `Stuck? You have ${S.hints} hint${S.hints === 1 ? '' : 's'} left. Biscuit won’t judge. Much.` : 'Stuck? A short video gets you a hint.', 5500);
-    }
   }
   function afterMove(kind){
+    if (kind !== 'swat') lastMoveAt = performance.now(); // Biscuit's swats don't count as the player moving
     const c = flags().c; setTitle(c);
     if (c === 0){ win(kind); prevC = 0; return; }
     if (kind === 'swat') say('swat');
@@ -568,15 +737,15 @@ body{background:#2A1D14}
         goodRun++;
         if (!saidOne && c === 1){ saidOne = true; say('one'); }
         else if (!saidHalf && c <= initialC/2){ saidHalf = true; say('half'); react(Math.random() < .5 ? 'left' : 'right', .7); }
-        else if (goodRun >= 3){ goodRun = 0; say('combo'); react('blink', .6); }
-        else if (Math.random() < .45) say('better');
-      } else if (c > prevC){ goodRun = 0; if (Math.random() < .55) say('worse'); }
+        else if (goodRun >= 3){ goodRun = 0; if (!quiet()) say('combo'); react('blink', .6); }
+        else if (Math.random() < .2 && !quiet()) say('better');
+      } else if (c > prevC){ goodRun = 0; if (Math.random() < .35 && !quiet()) (Math.random() < .5 ? sayLine('Bold move.') : say('worse')); }
     }
     prevC = c;
   }
   function win(kind){
-    won = true; clearTimeout(swatId); endHunt(); clearInterval(timerId);
     ev('demo-complete-level-' + (S.lvl+1));
+    won = true; clearTimeout(swatId); endHunt(); clearInterval(timerId);
     const t = (performance.now() - t0) / 1000, b = getBest();
     const best = b == null ? t : Math.min(b, t); setBest(best);
     const oldY = S.yarn; S.yarn += YARN_PER_LEVEL;
@@ -585,7 +754,12 @@ body{background:#2A1D14}
     save(); updateHud();
     $('time').textContent = `${fmt(t)} · best ${fmt(best)}`;
     cat.classList.add('happy'); react('blink', 1);
-    const line = say(kind === 'swat' ? 'catWin' : 'win');
+    sfx('win'); setTimeout(() => sfx('purr'), 250); buzz([25, 60, 40]);
+    // Levels 1, 3 and 5 always end with Hollie's "Every string clear…"; levels 2 and 4 use the other win lines.
+    const CLEAR = 'Every string clear. Biscuit was impressed… briefly.';
+    const line = kind === 'swat' ? say('catWin')
+      : S.lvl % 2 === 0 ? sayLine(CLEAR)
+      : sayLine((o => o[Math.floor(Math.random()*o.length)])(LINES.win.filter(l => l !== CLEAR)));
     ballEls.forEach((g, i) => { g.classList.remove('hop'); setTimeout(() => g.classList.add('hop'), reduce ? 0 : i*45); });
     setTimeout(() => {
       const last = S.lvl === LEVELS.length-1;
@@ -625,6 +799,7 @@ body{background:#2A1D14}
     dragging = {i, from: {...pos[i]}, g};
     try { board.setPointerCapture(e.pointerId); } catch(err){}
     gBalls.appendChild(g); g.classList.remove('drop'); g.classList.add('lift');
+    sfx('pick');
     e.preventDefault();
   });
   board.addEventListener('pointermove', e => { if (!dragging) return; const p = local(e); pos[dragging.i] = fromPx(p.x, p.y); render(); if (!hunt) lookAt(e.clientX, e.clientY); });
@@ -632,6 +807,7 @@ body{background:#2A1D14}
     if (!dragging) return;
     const {i, from, g} = dragging; dragging = null;
     g.classList.remove('lift'); g.classList.add('drop'); setTimeout(() => g.classList.remove('drop'), 260);
+    sfx('drop');
     if (Math.hypot(pos[i].u-from.u, pos[i].v-from.v) > .004){ undoStack.push({i, from}); afterMove('player'); }
   }
   board.addEventListener('pointerup', endDrag);
@@ -644,7 +820,7 @@ body{background:#2A1D14}
     if (top && top.free){ undoStack.pop(); speak('Swat undone. That one’s on the house.', 2600); animate({[top.i]: top.from}, 200, () => afterMove('undo')); return; }
     if (S.undos <= 0){ openAd('undos'); return; }
     if (!undoStack.length){ speak('Nothing to undo yet.', 2200); return; }
-    S.undos--; save(); updateHud();
+    S.undos--; save(); updateHud(); sfx('undo');
     const m = undoStack.pop();
     animate({[m.i]: m.from}, 200, () => afterMove('undo'));
   });
@@ -659,6 +835,7 @@ body{background:#2A1D14}
   });
   function useHint(){
     const m = bestHint(); if (!m) return;
+    sfx('hint');
     undoStack.push({i: m.i, from: {...pos[m.i]}});
     animate({[m.i]: m.to}, 480, () => afterMove('hint'));
   }
@@ -709,6 +886,49 @@ body{background:#2A1D14}
     $('adSkip').textContent = 'Back to puzzle'; $('adClaim').textContent = 'Watch another';
     $('adSkip').focus({preventScroll:true});
   });
+
+  // ---------- settings page ----------
+  let setPausedAt = 0;
+  function overlay(){ return !$('ad').hidden || !$('settings').hidden; }
+  function paintSettings(){
+    document.querySelectorAll('#settings .sw').forEach(b => b.setAttribute('aria-checked', String(!!SET[b.dataset.k])));
+    document.querySelectorAll('#settings .vol').forEach(r => { r.value = SET[r.dataset.v]; r.disabled = !SET[r.dataset.v.replace('Vol', '')]; });
+    if (!canVibe){
+      const vb = document.querySelector('#settings .sw[data-k="vibe"]');
+      vb.disabled = true; vb.setAttribute('aria-checked', 'false');
+      $('vibeNote').textContent = 'This device or browser doesn’t support vibration.';
+    }
+  }
+  function openSettings(){
+    if (!$('settings').hidden || !$('ad').hidden) return;
+    paintSettings(); $('settings').hidden = false;
+    clearTimeout(swatId); endHunt(); setPausedAt = performance.now();
+    $('setDone').focus({preventScroll:true});
+  }
+  function closeSettings(){
+    $('settings').hidden = true;
+    if (setPausedAt && !won){ const d = performance.now() - setPausedAt; t0 += d; lastMoveAt += d; lastIdleSayAt += d; } // don't count time spent in Settings
+    setPausedAt = 0;
+    if (!won) scheduleSwat(12000, 20000);
+    $('gear').focus({preventScroll:true});
+  }
+  // soft tap on buttons (hint and undo have their own sounds)
+  document.addEventListener('click', e => { const b = e.target.closest('button'); if (b && b.id !== 'hint' && b.id !== 'undo') sfx('tap'); }, true);
+  $('gear').addEventListener('click', openSettings);
+  $('setDone').addEventListener('click', closeSettings);
+  $('settings').addEventListener('click', e => { if (e.target.id === 'settings') closeSettings(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('settings').hidden) closeSettings(); });
+  document.querySelectorAll('#settings .sw').forEach(b => b.addEventListener('click', () => {
+    const k = b.dataset.k; SET[k] = !SET[k]; saveSet(); paintSettings();
+    if (k === 'vibe' && SET.vibe) buzz(30);
+    if (k === 'music') syncMusic();
+    if (k === 'voice' && !SET.voice && voiceNow) voiceNow.pause();
+  }));
+  document.querySelectorAll('#settings .vol').forEach(r => r.addEventListener('input', () => {
+    const k = r.dataset.v; SET[k] = +r.value; saveSet();
+    if (k === 'musicVol' && musicGain && SET.music) musicGain.gain.setTargetAtTime(musicLevel(), musicCtx.currentTime, .1);
+    if (k === 'voiceVol' && voiceNow) voiceNow.volume = SET.voiceVol/100;
+  }));
 
   function nodeCross(n, P){
     const E = level.edges; let c = 0;
@@ -826,9 +1046,9 @@ body{background:#2A1D14}
   function scheduleIdle(){
     clearTimeout(idleId);
     idleId = setTimeout(() => {
-      if (!won && !act && !pending && !dragging && $('ad').hidden){
+      if (!won && !act && !pending && !dragging && !overlay()){
         const pick = IDLE_ORDER[idleTurn % IDLE_ORDER.length];
-        if (playClip(pick, pick === 'yawn' ? {marks:[{t:1.2, fn:() => { if (Math.random() < .5) speak('Biscuit yawns. No pressure.', 2800); }}]} : {})) idleTurn++;
+        if (playClip(pick, pick === 'yawn' ? {marks:[{t:1.2, fn:() => { if (Math.random() < .3 && !quiet()) speak('Biscuit is yawning. No pressure.', 2800); }}]} : {})) idleTurn++;
       }
       scheduleIdle();
     }, 9000 + Math.random()*7000);
@@ -847,28 +1067,29 @@ body{background:#2A1D14}
     hunt = null;                                   // the clip may finish, but the flick won't touch a ball
     if (pending && pending.name === 'swat') pending = null;
   }
-  function abortHunt(byPlayer){ endHunt(); if (byPlayer && Math.random() < .6) speak('Fine. Biscuit wasn’t interested anyway.', 3200); scheduleSwat(15000, 24000); }
+  function abortHunt(byPlayer){ endHunt(); if (byPlayer && Math.random() < .6) speak('Fine. Biscuit wasn’t interested anyway.', 3200); scheduleSwat(12000, 18000); }
   // Swat: Biscuit stares (~1 s), crouches, then flicks the paw at the ball nearest to it; grabbing that ball first cancels it.
   function swat(){
     if (won || hunt) return;
-    if (act || pending || dragging || busy || prevC === 0 || !$('ad').hidden){ scheduleSwat(3000, 5000); return; }
+    if (act || pending || dragging || busy || prevC === 0 || overlay()){ scheduleSwat(3000, 5000); return; }
     const nearest = () => { const paw = pawPoint(), P = pos.map(toPx); let n = 0, bd = Infinity;
       P.forEach((p, i) => { const d = Math.hypot(p.x-paw.x, p.y-paw.y); if (d < bd){ bd = d; n = i; } }); return n; };
     hunt = {n: nearest()};
     const ok = playClip('swat', {
       marks: [
         {t: 0.05, fn: () => { if (hunt) hunt.n = nearest(); }},
-        {t: 0.3, fn: () => { if (hunt && Math.random() < .5) speak('Biscuit has spotted something.', 2200); }},
+        {t: 0.3, fn: () => { if (hunt && Math.random() < .25 && !quiet()) speak('Biscuit has spotted something.', 2200); }},
         {t: FLICK, fn: () => {
           if (!hunt) return;
           const nn = hunt.n; hunt = null;
-          if (dragging || busy || won || !$('ad').hidden) return;
+          if (dragging || busy || won || overlay()) return;
           const target = flickTarget(nn);
+          sfx('swat'); buzz(35);
           undoStack.push({i: nn, from: {...pos[nn]}, free: true});
           animate({[nn]: target}, reduce ? 1 : 700, () => afterMove('swat'));
         }}
       ],
-      done: () => { hunt = null; if (!won) scheduleSwat(18000, 28000); }
+      done: () => { hunt = null; if (!won) scheduleSwat(12000, 18000); }
     });
     if (!ok){ hunt = null; scheduleSwat(3000, 5000); }
   }
@@ -877,11 +1098,11 @@ body{background:#2A1D14}
   vid.addEventListener('playing', () => { $('still').style.visibility = 'hidden'; });
   const kick = () => { if (!act) vid.play().catch(() => {}); };
   kick(); window.addEventListener('pointerdown', kick, {once: true});
+  window.addEventListener('pointerdown', syncMusic, {once: true}); // browsers only allow music after a first tap
   window.addEventListener('resize', () => { if (!level || dragging) return; measure(); build(); render(); });
   startLevel();
 })();
 </script>
-
 <script src="../assets/site.js"></script>
 </body>
 </html>
