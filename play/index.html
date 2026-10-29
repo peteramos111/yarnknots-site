@@ -149,6 +149,10 @@ body{background:#2A1D14}
 .ledge{background:none !important; box-shadow:none !important; justify-content:flex-start !important; gap:8px}
 .ledge .btn,.ledge .icon{box-shadow:0 4px 14px rgba(30,15,5,.35)}
 #bubble{left:auto !important; right:max(16px, env(safe-area-inset-right, 0px)); bottom:150px !important; border-radius:18px 18px 6px 18px}
+/* See-through bubble: sits UNDER the yarn (balls and strings draw on top of it) and never catches taps. */
+#bubble{z-index:1 !important; background:rgba(255,255,255,.22) !important; box-shadow:none !important; border:1px solid rgba(255,255,255,.35); color:#2E2A26; text-shadow:0 0 4px rgba(255,255,255,.95), 0 0 10px rgba(255,255,255,.8)}
+#bubble, #bubble *{pointer-events:none !important}
+#bubble.hideText{display:none !important}
 .edge .halo{stroke:#E4573B; opacity:0 !important; transition:opacity .35s}
 .edge.x .halo{opacity:.75 !important}
 .edge .base,.edge .ply,.edge .ply2{stroke:inherit}
@@ -315,6 +319,10 @@ body{background:#2A1D14}
         <input class="vol" type="range" min="0" max="100" step="5" data-v="voiceVol" aria-label="Voice volume">
       </div>
       <div class="setRow">
+        <div class="setTop"><div><div class="setName">Text bubbles</div><div class="setNote">Show Biscuit’s lines as words on the rug.</div></div>
+          <button class="sw" type="button" role="switch" data-k="text" aria-label="Text bubbles"></button></div>
+      </div>
+      <div class="setRow">
         <div class="setTop"><div><div class="setName">Sound</div><div class="setNote">Yarn, swats, hints and level wins.</div></div>
           <button class="sw" type="button" role="switch" data-k="sound" aria-label="Sound effects"></button></div>
         <input class="vol" type="range" min="0" max="100" step="5" data-v="soundVol" aria-label="Sound volume">
@@ -375,7 +383,7 @@ body{background:#2A1D14}
 
   // ---------- settings (saved on this device) ----------
   const SET_KEY = 'yk-settings-v1';
-  let SET = {voice:true, sound:true, music:true, vibe:true, voiceVol:80, soundVol:70, musicVol:40};
+  let SET = {voice:true, text:true, sound:true, music:true, vibe:true, voiceVol:80, soundVol:70, musicVol:40};
   try { const v = JSON.parse(localStorage.getItem(SET_KEY) || 'null'); if (v && typeof v === 'object') SET = Object.assign(SET, v); } catch(e){}
   function saveSet(){ try { localStorage.setItem(SET_KEY, JSON.stringify(SET)); } catch(e){} }
   const canVibe = typeof navigator.vibrate === 'function'; // Android browsers yes; iPhone Safari no
@@ -483,7 +491,7 @@ body{background:#2A1D14}
   const quiet = () => performance.now() - lastSpokeAt < QUIET_MS;
   function speak(text, ms){
     lastSpokeAt = performance.now();
-    const b = $('bubble'); b.classList.add('off');
+    const b = $('bubble'); b.classList.add('off'); b.classList.toggle('hideText', !SET.text); // Text bubbles switch: voice still plays when off
     setTimeout(() => { b.textContent = text; b.classList.remove('off'); playVoice(text); }, reduce ? 0 : 160);
     clearTimeout(bubbleT); bubbleT = setTimeout(() => b.classList.add('off'), ms || 4200);
   }
@@ -921,6 +929,7 @@ body{background:#2A1D14}
     const k = b.dataset.k; SET[k] = !SET[k]; saveSet(); paintSettings();
     if (k === 'vibe' && SET.vibe) buzz(30);
     if (k === 'music') syncMusic();
+    if (k === 'text') $('bubble').classList.toggle('hideText', !SET.text);
     if (k === 'voice' && !SET.voice && voiceNow) voiceNow.pause();
   }));
   document.querySelectorAll('#settings .vol').forEach(r => r.addEventListener('input', () => {
