@@ -6,9 +6,9 @@ This repository is **public** (required for free GitHub Pages). It contains only
 
 ## Copyright
 
-© 2026 Peter D. Ramos, carrying on business as Gudthingz (Ottawa, Ontario, Canada). All rights reserved.
+© 2026 Gudthingz (Ottawa, Ontario, Canada). All rights reserved.
 
-Yarn Knots, its name, characters (including Biscuit, Sir Pounce, Miso, Pillow and Pepper), artwork, voice recordings, sounds, game design and code are the property of Peter D. Ramos, carrying on business as Gudthingz. This repository is public only so the website can be hosted; that does **not** grant any licence. You may not copy, modify, redistribute or reuse any part of it, including in other games, apps or websites, without written permission.
+Yarn Knots, its name, characters (including Biscuit, Sir Pounce, Miso, Pillow and Pepper), artwork, voice recordings, sounds, game design and code are the property of Gudthingz. This repository is public only so the website can be hosted; that does **not** grant any licence. You may not copy, modify, redistribute or reuse any part of it, including in other games, apps or websites, without written permission.
 
 Questions or permission requests: hello@yarnknots.com
 
@@ -59,7 +59,7 @@ The signup form is a Sender.net embedded form ("Yarn Knots – Launch signup", g
 
 ## 4. Legal pages
 
-The Privacy, Terms and Press pages name Peter D. Ramos, carrying on business as Gudthingz, Ottawa, Ontario, Canada as the operator (updated October 15, 2026, including playtest data disclosure). Have a lawyer review the privacy policy and terms before running paid ads.
+The Privacy and Press pages name Gudthingz (Ottawa, Ontario, Canada) as the operator; the Terms page also names the owner (updated October 19, 2026). Have a lawyer review the privacy policy and terms before running paid ads.
 
 ## Playtest page
 
