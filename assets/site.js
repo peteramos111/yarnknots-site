@@ -54,6 +54,47 @@
     el.textContent = C.contactEmail;
     if (el.tagName === 'A') el.href = 'mailto:' + C.contactEmail;
   });
+  // Launch-news age check (14+): ask for birth year before showing the Sender form.
+  // The year is only checked here, never saved or sent. Under 14: the form stays closed on this device.
+  (function () {
+    var MIN_AGE = 14, KEY = 'yk-signup-blocked-v1', NO = 'Sorry, launch news is for people 14 and older.';
+    var boxes = document.querySelectorAll('.signup-form');
+    if (!boxes.length) return;
+    var css = document.createElement('style');
+    css.textContent = '.age-gate[hidden],.age-gate [hidden]{display:none!important}.age-gate{margin:10px auto;max-width:320px;text-align:left}.age-gate label{display:block;font-size:12px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;opacity:.75}' +
+      '.age-gate select{display:block;width:100%;box-sizing:border-box;margin-top:4px;height:44px;padding:0 12px;border:1px solid #D6CCBE;border-radius:12px;background:#fff;color:#2E2A26;font-size:16px;font-weight:500;font-family:inherit}' +
+      '.age-gate button{display:block;width:100%;margin-top:10px;height:44px;border:0;border-radius:999px;background:#2E2A26;color:#FBF8F3;font-size:16px;font-weight:700;font-family:inherit;cursor:pointer}' +
+      '.age-gate .age-msg{margin-top:8px;font-size:14px;font-weight:600;line-height:1.4;color:#A9482B}.age-gate .age-note{margin-top:8px;font-size:12px;opacity:.7}';
+    document.head.appendChild(css);
+    function blocked() { try { return localStorage.getItem(KEY) === '1'; } catch (e) { return false; } }
+    var y = new Date().getFullYear();
+    boxes.forEach(function (box, n) {
+      var field = box.querySelector('.sender-form-field'); if (!field) return;
+      field.hidden = true;
+      var g = document.createElement('div'); g.className = 'age-gate';
+      var id = 'ykYear' + n, opts = '<option value="">Select year</option>';
+      for (var k = y; k >= y - 100; k--) opts += '<option value="' + k + '">' + k + '</option>';
+      g.innerHTML = '<label for="' + id + '">Birth year</label><select id="' + id + '">' + opts + '</select>' +
+        '<button type="button">Continue</button><div class="age-msg" aria-live="polite"></div>' +
+        '<div class="age-note">We only check your birth year. It is never saved.</div>';
+      field.parentNode.insertBefore(g, field);
+      var sel = g.querySelector('select'), btn = g.querySelector('button'), msg = g.querySelector('.age-msg');
+      function shut() { sel.hidden = true; btn.hidden = true; g.querySelector('label').hidden = true; g.querySelector('.age-note').hidden = true; msg.textContent = NO; }
+      if (blocked()) { shut(); return; }
+      btn.addEventListener('click', function () {
+        var yr = +sel.value;
+        if (!yr) { msg.textContent = 'Please choose your birth year.'; return; }
+        sel.value = '';
+        // With only a year we can't tell if this year's birthday has passed, so the borderline year counts as under 14.
+        if (y - yr <= MIN_AGE) {
+          try { localStorage.setItem(KEY, '1'); } catch (e) {}
+          shut(); if (window.ykEvent) window.ykEvent('signup-age-refused'); return;
+        }
+        g.hidden = true; field.hidden = false;
+        if (window.ykEvent) window.ykEvent('signup-age-ok');
+      });
+    });
+  })();
   // Sender.net form: if it hasn't appeared after 8 seconds (ad blocker, network), show an email fallback instead.
   setTimeout(function () {
     document.querySelectorAll('.signup-form').forEach(function (box) {
